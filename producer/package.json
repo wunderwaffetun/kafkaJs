@@ -1,0 +1,27 @@
+{
+  "name": "producer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:consumer": "npx tsx consumer.ts",
+    "start": "npx tsx server.ts",
+    "start:prod": "npm run build && node ./dist/server.js",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "kafkajs": "^2.2.4",
+    "nodemon": "^3.1.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}

@@ -1,0 +1,41 @@
+version: "3"
+services:
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - kafka-network
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: 'kafka'
+    hostname: localhost
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,OUTSIDE://127.0.0.1:9093
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CREATE_TOPICS=test:3:1
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT
+    depends_on:
+      - zookeeper
+    networks:
+      - kafka-network
+  
+  
+networks:
+  kafka-network:
+    driver: bridge
+    
+      # docker exec -it kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic topic1
+      # docker exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic test
+      # docker exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --describe --topic test
+      # docker exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --alter --topic test --partitions 100
+      # docker network connect fuck-network kafka2-zookeeper-1

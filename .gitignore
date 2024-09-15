@@ -1,0 +1,4 @@
+node_modules/
+*/node_modules
+consumer/package-lock.json
+producer/package-lock.json
