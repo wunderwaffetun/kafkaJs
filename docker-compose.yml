@@ -28,6 +28,16 @@ services:
       - zookeeper
     networks:
       - kafka-network
+  producer:
+    build: ./producer  # указываем папку с Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - KAFKA_BROKERS=kafka:9092  # передаем адрес Kafka в переменных
+    depends_on:
+      - kafka
+    networks:
+      - kafka-network
   
   
 networks:

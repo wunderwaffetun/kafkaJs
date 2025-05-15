@@ -4,7 +4,7 @@
 
   const kafka = new Kafka({
     clientId: 'my-app',
-    brokers: ['kafka:9092'], // URL of Kafka broker
+    brokers: [process.env.KAFKA_BROKERS || 'kafka:9092'], // URL of Kafka broker
   });
 
   const producer = kafka.producer();
@@ -21,7 +21,7 @@
     res.send('Application works!');
   });
 
-  app.get('/send', async (req: Request, res: Response) => {
+  app.post('/send', async (req: Request, res: Response) => {
     try {
       await producer.send({
         topic: 'test', // topic name
